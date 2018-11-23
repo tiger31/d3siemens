@@ -1,0 +1,86 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+body, #container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: space-between;
+}
+#container {
+    overflow: hidden;
+    width: 100%;
+}
+#container > div {
+    margin: 0 5px;
+    border: 1px black solid;
+    box-sizing: border-box;
+}
+.panel {
+    flex-basis: 15%;
+    background-color: #ddd;
+    position: relative;
+    transition: 0.5s;
+}
+.panel.hidden {
+    flex-basis: 0;
+}
+#svg {
+    flex-grow: 1;
+}
+#controls {
+    padding: 10px;
+    flex-grow: 1;
+    min-width: 270px;
+    max-width: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+.value-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px black solid;
+    box-sizing: border-box;
+    font-size: 12px;
+}
+.value-container .value {
+    font-weight: bold;
+}
+.arrow {
+    position: absolute;
+    top: 50%;
+}
+.arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    border: 30px solid transparent;
+}
+.arrow.right {
+    left: 0;
+}
+.arrow.left {
+    right: 60px;
+}
+.panel.hidden .arrow.left {
+    left: -60px;
+}
+.panel.hidden .arrow.right {
+    right: 0;
+    left: auto;
+}
+.arrow.right::after {
+    border-left: 30px solid blue;
+}
+.arrow.left::after {
+    border-right: 30px solid blue;
+}
