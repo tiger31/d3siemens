@@ -10,11 +10,11 @@ const padding = 30;
 const svg = d3.select("#svg").append("svg");
 
 //Оси графика
-x = d3.scaleLinear();
+x = d3.scaleTime();
 y = d3.scaleLinear();
 
 line = d3.line()
-    .x((d, i) => x(i + 1))
+    .x(d => x(d.time))
     .y(d => y(d.value));
 
 //Линия графика
@@ -34,10 +34,12 @@ window.addEventListener("resize", function () {
 
 //Добавление элемента
 document.getElementById("add").addEventListener("click", function () {
-    const value = +document.getElementById("new-value").value;
+    const field = document.getElementById("new-value");
+    const value = +field.value;
     if (!Number.isNaN(value)) {
         addElem(value);
     }
+    field.value = null;
 });
 
 Array.prototype.forEach.call(document.getElementsByClassName("arrow"), arrow => {
@@ -89,8 +91,8 @@ function resize() {
 function updateChartData() {
     localStorage.setItem("data", JSON.stringify(data));
     //Пересчет осей
-    x.domain([1, data.length]);
-    y.domain([d3.min(data, d => d.value), d3.max(data, d => d.value)]);
+    x.domain(d3.extent(data, d => d.time));
+    y.domain(d3.extent(data, d => d.value));
 
     //Замена выборки для графика
     svg.select("path").datum(data);
